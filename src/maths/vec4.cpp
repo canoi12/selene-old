@@ -1,6 +1,6 @@
 #include "vec4.h"
 
-namespace selene { namespace maths {
+namespace solunar { namespace maths {
 
 	vec4::vec4(const float& x, const float& y, const float& z, const float& w)
 	{

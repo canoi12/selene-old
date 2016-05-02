@@ -4,7 +4,7 @@
 #include "vec4.h"
 #include "maths_func.h"
 
-namespace selene { namespace maths {
+namespace solunar { namespace maths {
 
 	struct mat4
 	{

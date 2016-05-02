@@ -1,10 +1,12 @@
+#ifndef WINDOW_H
+#define WINDOW_H
 #pragma once
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace selene {
+namespace solunar {
 	namespace graphics {
 
 #define MAX_KEYS 	1024
@@ -43,3 +45,5 @@ namespace selene {
 	}
 
 }
+
+#endif /* WINDOW_H */

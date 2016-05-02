@@ -20,5 +20,5 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(OBJECTS) -Wall $(LIBS) -o $@
 
 clean:
-	rm -f *.o
+	find . -name "*.o" -type f -print0 | xargs -0 /bin/rm -f
 	rm -f $(TARGET)

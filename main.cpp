@@ -1,32 +1,21 @@
 #include "src/graphics/window.h"
+#include "src/graphics/shader.h"
 #include "src/maths/maths.h"
 
 int main()
 {
-	using namespace selene;
+	using namespace solunar;
 	using namespace graphics;
 	using namespace maths;
 
-	Window window("Selene Engine",640,480);
+	Window window("Solunar Engine",640,480);
 	glClearColor(0.2f,0.3f,0.8f,1.0f);
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	vec3 vector(1.0f,2.0f,3.0f);
-	vector += vec3(5,2,10);
-	
-	mat4 position = mat4::translation(vec3(2, 3, 4));
-	position *= mat4::identity();
-	
-	position.elements[12] = 2.0f;
-	
-	vec4& c0 = position.columns[3];
-	vec4 c1 = position.getColumn(3);
-	
-	std::cout << &position.elements[12] << std::endl;
-	std::cout << &position.columns[3] << std::endl;
+	//Shader shader();
 
 	while(!window.closed())
 	{

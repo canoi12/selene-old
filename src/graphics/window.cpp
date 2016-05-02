@@ -1,6 +1,6 @@
 #include "window.h"
 
-namespace selene{
+namespace solunar{
 	namespace graphics {
 		void windowResize(GLFWwindow *window, int width, int height);
 
