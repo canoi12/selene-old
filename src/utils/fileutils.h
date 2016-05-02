@@ -6,7 +6,7 @@
 #include <string.h>
 #include <fstream>
 
-namespace solunar {
+namespace selene {
    /*
    Redefini no shader.h e shader.cpp
    std::string read_file(const char* filepath)

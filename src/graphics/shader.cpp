@@ -1,6 +1,6 @@
 #include "shader.h"
 
-namespace solunar { namespace graphics {
+namespace selene { namespace graphics {
     
     std::string Shader::read_file(const char* filepath)
     {

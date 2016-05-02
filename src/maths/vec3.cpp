@@ -1,6 +1,6 @@
 #include "vec3.h"
 
-namespace solunar { namespace maths {
+namespace selene { namespace maths {
 
 	vec3::vec3()
 	{

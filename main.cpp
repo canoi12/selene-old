@@ -4,11 +4,11 @@
 
 int main()
 {
-	using namespace solunar;
+	using namespace selene;
 	using namespace graphics;
 	using namespace maths;
 
-	Window window("Solunar Engine",640,480);
+	Window window("Selene Engine",640,480);
 	glClearColor(0.2f,0.3f,0.8f,1.0f);
 
 	GLuint vao;

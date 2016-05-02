@@ -9,7 +9,7 @@
 
 #include "../utils/fileutils.h"
 
-namespace solunar { namespace graphics {
+namespace selene { namespace graphics {
 
     class Shader
     {

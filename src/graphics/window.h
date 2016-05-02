@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace solunar {
+namespace selene {
 	namespace graphics {
 
 #define MAX_KEYS 	1024

@@ -1,6 +1,6 @@
 #include "mat4.h"
 
-namespace solunar { namespace maths {
+namespace selene { namespace maths {
     
     mat4::mat4()
     {

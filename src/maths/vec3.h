@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace solunar { namespace maths {
+namespace selene { namespace maths {
 
 	struct vec3
 	{
