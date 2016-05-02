@@ -1,5 +1,5 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+//#ifndef WINDOW_H
+//#define WINDOW_H
 #pragma once
 
 #include <GL/glew.h>
@@ -46,4 +46,4 @@ namespace selene {
 
 }
 
-#endif /* WINDOW_H */
+//#endif /* WINDOW_H */

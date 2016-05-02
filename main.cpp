@@ -15,20 +15,15 @@ int main()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	//Shader shader();
+	Shader shader("shaders/basic.vert","shaders/basic.frag");
 
 	while(!window.closed())
 	{
-		window.clear();
-		//std::cout << vector << std::endl;
-#if 1
-		glBegin(GL_QUADS);
 		glVertex2f(-0.5f,-0.5f);
 		glVertex2f(-0.5f, 0.5f);
 		glVertex2f(0.5f, 0.5f);
 		glVertex2f(0.5f,-0.5f);
-		glEnd();
-#endif
+		window.clear();
 		glDrawArrays(GL_ARRAY_BUFFER,0,6);
 		window.update();
 	}

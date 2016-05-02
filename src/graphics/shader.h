@@ -1,5 +1,5 @@
-#ifndef SHADER_H
-#define SHADER_H
+//#ifndef SHADER_H
+//#define SHADER_H
 
 #pragma once
 
@@ -21,7 +21,7 @@ namespace selene { namespace graphics {
         Shader(const char* vertPath, const char* fragPath);  
         ~Shader();
         
-        std::string read_file(const char* filepath);
+        //std::string read_file(const char* filepath);
         
         void enable() const;
         void disable() const;
@@ -31,4 +31,4 @@ namespace selene { namespace graphics {
     
 }   }
 
-#endif /* SHADER_H */
+//#endif /* SHADER_H */

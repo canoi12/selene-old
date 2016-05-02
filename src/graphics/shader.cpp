@@ -2,7 +2,7 @@
 
 namespace selene { namespace graphics {
     
-    std::string Shader::read_file(const char* filepath)
+    /*std::string Shader::read_file(const char* filepath)
     {
         FILE* file = fopen(filepath, "rt");
         fseek(file, 0, SEEK_END);
@@ -17,12 +17,17 @@ namespace selene { namespace graphics {
         
         delete[] data;
         return result;
-    }
+    }*/
     
     Shader::Shader(const char* vertPath, const char* fragPath)
        : m_VertPath(vertPath), m_FragPath(fragPath)
     {
         m_ShaderID = load();
+    }
+    
+    Shader::~Shader()
+    {
+        
     }
     
     GLuint Shader::load()
@@ -31,8 +36,8 @@ namespace selene { namespace graphics {
         GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
         GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
         
-        std::string vertSource = read_file(m_VertPath);
-        std::string fragSource = read_file(m_FragPath);
+        std::string vertSource = FileUtils::read_file(m_VertPath);
+        std::string fragSource = FileUtils::read_file(m_FragPath);
         
         const char* v = vertSource.c_str();
         const char* f = fragSource.c_str();
