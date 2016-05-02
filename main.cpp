@@ -15,7 +15,7 @@ int main()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	Shader shader("shaders/basic.vert","shaders/basic.frag");
+	Shader shader("src/shaders/basic.vert","src/shaders/basic.frag");
 
 	while(!window.closed())
 	{
