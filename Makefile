@@ -8,8 +8,8 @@ CXXFLAGS = -std=c++0x -pg -D_DEBUG -g -c -Wall
 default: $(TARGET)
 all: default
 
-OBJECTS = $(patsubst %.cpp, %.o, $(wildcard *.cpp) $(wildcard src/*/*.cpp)) 
-HEADERS = $(wildcard /src/*/*.h)
+OBJECTS = $(patsubst %.cpp, %.o, $(wildcard /*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)) 
+HEADERS = $(patsubst %.h, %.h, $(wildcard /src/*/*.h) $(wildcard /src/*/*/*.h))
 
 %.o: %.c $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@

@@ -2,6 +2,11 @@
 #include "src/graphics/shader.h"
 #include "src/maths/maths.h"
 
+#include "src/graphics/buffers/buffer.h"
+#include "src/graphics/buffers/indexbuffer.h"
+#include "src/graphics/buffers/vertexarray.h"
+
+
 int main()
 {
 	using namespace selene;
@@ -11,7 +16,7 @@ int main()
 	Window window("Selene Engine",640,480);
 	//glClearColor(0.0f,1.0f,1.0f,1.0f);
 
-	
+#if 0	
 	GLfloat vertices[] = {
 		0,0,0,
 		8,0,0,
@@ -31,6 +36,27 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+#else
+	GLfloat vertices[] = {
+		0,0,0,
+		8,0,0,
+		0,3,0,
+		8,3,0
+	};
+	
+	GLushort indices[] =
+	{
+		0,1,2,
+		2,3,0
+	};
+	
+	VertexArray vao;
+	Buffer* vbo = new Buffer(vertices, 4 * 3, 3);
+	IndexBuffer ibo(indices, 6);
+	
+	vao.addBuffer(vbo, 0);
+	
+#endif
 	
 	mat4 ortho = mat4::orthographic(0.0f,16.0f,0.0f,9.0f,-1.0f,1.0f);
 	
@@ -42,7 +68,7 @@ int main()
 	shader.setUniformMat4("vw_matrix", mat4::translation(vec3(3,2,0)));
 	shader.setUniformMat4("ml_matrix", mat4(1.0));
 	
-	shader.setUniform2f("light_pos",vec2(4.0f,1.5f));
+	shader.setUniform2f("light_pos", vec2(4.0f,1.5f));
 	shader.setUniform4f("colour", vec4(0.2f, 0.3f, 0.8f, 1.0f));
 
 	while(!window.closed())
@@ -52,7 +78,21 @@ int main()
 			return 0;
 		}
 		window.clear();
+		double x,y;
+		window.getMousePosition(x,y);
+		std::cout << x << ", " << y << std::endl;
+		shader.setUniform2f("light_pos",vec2((float)(x / 640.0f),(float)(-y / 480.0f)));
+#if 0
 		glDrawArrays(GL_TRIANGLES,0,6);
+#else
+		vao.bind();
+		ibo.bind();
+			
+		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+		
+		ibo.unbind();
+		vao.unbind();
+#endif
 		window.update();
 	}
 	return 0;
