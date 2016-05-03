@@ -13,7 +13,7 @@ namespace selene { namespace graphics {
 
     class Shader
     {
-    private:
+    public:
         GLuint m_ShaderID;
         const char *m_VertPath;
         const char *m_FragPath;
