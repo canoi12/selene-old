@@ -9,22 +9,16 @@ int main()
 	using namespace maths;
 
 	Window window("Selene Engine",640,480);
-	glClearColor(0.2f,0.3f,0.8f,1.0f);
+	//glClearColor(0.0f,1.0f,1.0f,1.0f);
 
-
-	/*GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);*/
-	
-	/*glVertex2f(-0.5f,-0.5f);
-		glVertex2f(-0.5f, 0.5f);
-		glVertex2f(0.5f, 0.5f);
-		glVertex2f(0.5f,-0.5f);*/
 	
 	GLfloat vertices[] = {
-		4,3,0,
-		12,3,0,
-		4,6,0
+		0,0,0,
+		8,0,0,
+		0,3,0,
+		0,3,0,
+		8,3,0,
+		8,0,0
 		
 	};
 	
@@ -44,7 +38,12 @@ int main()
 	Shader shader("src/shaders/basic.vert","src/shaders/basic.frag");
 	shader.enable();
 
-	glUniformMatrix4fv(glGetUniformLocation(shader.m_ShaderID, "pr_matrix"), 1, GL_FALSE, ortho.elements);
+	shader.setUniformMat4("pr_matrix", ortho);
+	shader.setUniformMat4("vw_matrix", mat4::translation(vec3(3,2,0)));
+	shader.setUniformMat4("ml_matrix", mat4(1.0));
+	
+	shader.setUniform2f("light_pos",vec2(4.0f,1.5f));
+	shader.setUniform4f("colour", vec4(0.2f, 0.3f, 0.8f, 1.0f));
 
 	while(!window.closed())
 	{
