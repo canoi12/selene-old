@@ -1,0 +1,81 @@
+#include "image.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+Image * selene_create_image(const char * path) {
+  Image * image = (Image*) malloc(sizeof(Image));
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+  
+  int w, h, comp;
+  unsigned char * img = stbi_load(path, &w, &h, &comp, STBI_rgb_alpha);
+ 
+  image->_width = w;
+  image->_height = h;
+
+  glGenTextures(1, &(image->_tex));
+
+  glBindTexture(GL_TEXTURE_2D, image->_tex);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+  if (comp == 4) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+  } else if(comp == 3) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+  }
+  glBindTexture(GL_TEXTURE_2D, 0);
+  stbi_image_free(img);
+
+  
+  float vertices[] = {
+    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+
+    0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
+  };
+  
+  glGenVertexArrays(1, &(image->_vao));
+  glBindVertexArray(image->_vao);
+
+  glGenBuffers(1, &(image->_vbo));
+  glBindBuffer(GL_ARRAY_BUFFER, image->_vbo);
+
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) 0);
+
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) (2 * sizeof(float)));
+
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) (5 * sizeof(float)));
+
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+
+  return image;
+}
+
+int selene_get_image_width(Image * image) {
+  return image->_width;
+}
+
+int selene_get_image_height(Image * image) {
+  return image->_height;
+}
+
+void selene_draw_image(Image * image, int x, int y) {
+  glBindTexture(GL_TEXTURE_2D, image->_tex);
+  glBindVertexArray(image->_vao);
+  glDrawArrays(GL_TRIANGLES, 0, 6);
+  glBindVertexArray(0);
+  glBindTexture(GL_TEXTURE_2D, 0);
+}

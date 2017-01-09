@@ -1,0 +1,11 @@
+#ifndef _WINDOW_H_
+#define _WINDOW_H_
+
+#include <stdio.h>
+#include <SDL2/SDL.h>
+
+typedef struct window_s {
+
+} Window;
+
+#endif // _WINDOW_H_

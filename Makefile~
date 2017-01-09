@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-lGL -lGLEW -lSDL2 -lm
+CFLAGS=-lGL -lSDL2
 FILES=*.c
 PROGRAM=engine
 

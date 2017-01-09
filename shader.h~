@@ -1,0 +1,16 @@
+#ifndef _SHADER_H_
+#define _SHADER_H_
+
+#include "selene.h"
+
+typedef struct shader_s {
+  GLuint _ID;
+} Shader;
+
+Shader * selene_create_shader(const char * vert_path, const char * frag_path);
+
+GLuint selene_load_shader(const char * path, GLenum type);
+
+void selene_use_shader(Shader * shader);
+
+#endif // _SHADER_H_
