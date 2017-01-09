@@ -65,15 +65,11 @@ Image * selene_create_image(const char * path) {
 }
 
 int selene_get_image_width(Image * image) {
-  Image * img;
-  img = image;
-  return img->_width;
+  return image->_width;
 }
 
 int selene_get_image_height(Image * image) {
-  Image * img;
-  img = image;
-  return img->_height;
+  return image->_height;
 }
 
 void selene_draw_image(Image * image, Quad * quad, int x, int y) {
@@ -95,8 +91,8 @@ void selene_draw_image(Image * image, Quad * quad, int x, int y) {
     tex[0] = 0.0f;
     tex[1] = 0.0f;
 
+    tex[2] = 1.0f;
     tex[3] = 1.0f;
-    tex[4] = 1.0f;
     mat4x4_scale_aniso(model, model, selene_get_image_width(image), selene_get_image_height(image), 0.0f);
   }
   

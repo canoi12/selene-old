@@ -2,7 +2,7 @@
 
 #include "selene.h"
 
-#define NIMAGES 220
+#define NIMAGES 1
 
 typedef struct image_vector Vector;
 
@@ -25,16 +25,15 @@ void insert_vector(Vector * vec, Image * image) {
 
 void draw_values(Vector * vec) {
   int x=0, y=-1;
-  printf("vish\n");
   Vector * aux;
   aux = vec->next;
   while(aux->next != NULL) {
-    Quad quad = {0, 0, 640/NIMAGES, 480/NIMAGES};
+    Quad quad = {0, 0, 16, 16};
     x = x % NIMAGES;
     if (x == 0) {
       y++;
     }
-    selene_draw_image(aux->image, &quad, x * (640/NIMAGES), y * (480/NIMAGES));
+    selene_draw_image(aux->image, &quad, x, y);
     x++;
     aux = aux->next;
   }
@@ -49,7 +48,7 @@ int main(int argc, char* argv[]) {
   //Image * image = selene_create_image("assets/astronaut.png");
 
   //Image image[2500];
-  Vector * vec = malloc(sizeof(Vector));
+  /*Vector * vec = malloc(sizeof(Vector));
   vec->next = NULL;
 
   for (int x = 0; x < (NIMAGES*NIMAGES); x++) {
@@ -58,6 +57,8 @@ int main(int argc, char* argv[]) {
   }
   printf("wow\n");
   printf("%d\n", selene_get_image_height(vec->next->image));
+  */
+  Image * img = selene_create_image("assets/843.jpg");
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
 
@@ -80,8 +81,9 @@ int main(int argc, char* argv[]) {
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     selene_use_default_shader();
 
-    draw_values(vec);
-
+    //draw_values(vec);
+    Quad quad = {0, 0, 720, 960};
+    selene_draw_image(img, NULL, 0, 0);
     glDisable(GL_BLEND);
 
     selene_swap_window();

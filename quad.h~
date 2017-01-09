@@ -1,8 +1,0 @@
-#ifndef _QUAD_H_
-#define _QUAD_H_
-
-typedef struct quad_s {
-
-} Quad;
-
-#endif // _QUAD_H_

@@ -1,7 +1,0 @@
-CC=gcc
-CFLAGS=-lGL -lSDL2
-FILES=*.c
-PROGRAM=engine
-
-hello:
-	$(CC) $(FILES) -o $(PROGRAM) $(CFLAGS)
