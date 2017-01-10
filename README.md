@@ -5,7 +5,7 @@ Biblioteca de terceiros estou usando:
 - [`stb_image`](https://github.com/nothings/stb) para carregar as imagens
 - [`linmath`](https://github.com/datenwolf/linmath.h) para usar operações de algebra linear com vetores e matrizes.
 
-![Selene Engine](https://raw.githubusercontent.com/canoi12/canoi12.github.io/master/ImagensSite/selene_engine.png)
+![Selene Engine](https://raw.githubusercontent.com/canoi12/selene/master/assets/animation.gif)
 
 # TODOS
 - [ ] Adicionar suporte a sons.
