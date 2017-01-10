@@ -2,7 +2,7 @@
 
 #include "selene.h"
 
-#define NIMAGES 1
+#define NIMAGES 100
 
 typedef struct image_vector Vector;
 
@@ -28,12 +28,12 @@ void draw_values(Vector * vec) {
   Vector * aux;
   aux = vec->next;
   while(aux->next != NULL) {
-    Quad quad = {0, 0, 16, 16};
+    Quad quad = {0, 0, (640/NIMAGES), (480/NIMAGES)};
     x = x % NIMAGES;
     if (x == 0) {
       y++;
     }
-    selene_draw_image(aux->image, &quad, x, y);
+    selene_draw_image(aux->image, &quad, x *  (640/NIMAGES), y * (480/NIMAGES));
     x++;
     aux = aux->next;
   }
@@ -51,19 +51,20 @@ int main(int argc, char* argv[]) {
   /*Vector * vec = malloc(sizeof(Vector));
   vec->next = NULL;
 
+  Image * image = selene_create_image("assets/astronaut.png");
   for (int x = 0; x < (NIMAGES*NIMAGES); x++) {
-    Image * image = selene_create_image("assets/astronaut.png");
     insert_vector(vec, image);
-  }
+  }*/
   printf("wow\n");
-  printf("%d\n", selene_get_image_height(vec->next->image));
-  */
   Image * img = selene_create_image("assets/843.jpg");
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
 
   int x, y;
   float dy;
+
+  int frames = 0;
+  Uint32 starttime = SDL_GetTicks();
   
   while (engine->_running) {
     selene_poll_event();
@@ -84,9 +85,18 @@ int main(int argc, char* argv[]) {
     //draw_values(vec);
     Quad quad = {0, 0, 720, 960};
     selene_draw_image(img, NULL, 0, 0);
+    
     glDisable(GL_BLEND);
-
     selene_swap_window();
+
+    ++frames;
+
+    Uint32 currenttime = SDL_GetTicks() - starttime;
+    if (currenttime) {
+      double seconds = currenttime / 1000.0;
+      double fps = frames / seconds;
+      printf("%f FPS\n", fps);
+    }
   }
 
   selene_terminate();

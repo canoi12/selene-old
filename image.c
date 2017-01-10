@@ -56,7 +56,12 @@ Image * selene_create_image(const char * path) {
 
   int w, h, comp;
   unsigned char * img = stbi_load(path, &(image->_width), &(image->_height), &comp, STBI_rgb_alpha);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->_width, image->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
+
+  if (!img) {
+    printf("Could not be possible to load the image: %s\n", path);
+  }
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->_width, image->_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
 
   stbi_image_free(img);
   glBindTexture(GL_TEXTURE_2D, 0);
