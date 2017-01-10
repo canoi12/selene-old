@@ -4,7 +4,7 @@
 #include "selene.h"
 #include "quad.h"
 
-typedef struct image_s {
+typedef struct {
   GLuint _vao, _vbo, _ebo;
   GLuint _tex;
   int _width;

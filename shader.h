@@ -12,7 +12,7 @@ enum sel_uni_type {
   SELENE_INT = 5
 };
 
-typedef struct shader_s {
+typedef struct shader {
   GLuint _ID;
 } Shader;
 

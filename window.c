@@ -13,29 +13,29 @@ Window * selene_create_window(const char * title, int width, int height, Uint32 
 }
 
 void selene_resize_window(int width, int height) {
-  SDL_SetWindowSize(engine->_window->_window, width, height);
+  SDL_SetWindowSize(CORE->_window->_window, width, height);
   glViewport(0, 0, width, height);
-  engine->_window->_width = width;
-  engine->_window->_height = height;
+  CORE->_window->_width = width;
+  CORE->_window->_height = height;
 }
 
 void selene_toggle_fullscreen() {
-  if (SDL_GetWindowFlags(engine->_window->_window) & SDL_WINDOW_FULLSCREEN) {
-    SDL_SetWindowFullscreen(engine->_window->_window, 0);
+  if (SDL_GetWindowFlags(CORE->_window->_window) & SDL_WINDOW_FULLSCREEN) {
+    SDL_SetWindowFullscreen(CORE->_window->_window, 0);
   } else {
-    SDL_SetWindowFullscreen(engine->_window->_window, SDL_WINDOW_FULLSCREEN);
+    SDL_SetWindowFullscreen(CORE->_window->_window, SDL_WINDOW_FULLSCREEN);
   }
 }
 
 int selene_get_window_width() {
-  return engine->_window->_width;
+  return CORE->_window->_width;
 }
 
 int selene_get_window_height() {
-  return engine->_window->_height;
+  return CORE->_window->_height;
 }
 
 void selene_set_window_title(const char * title) {
-  SDL_SetWindowTitle(engine->_window->_window, title);
-  engine->_window->_title = title;
+  SDL_SetWindowTitle(CORE->_window->_window, title);
+  CORE->_window->_title = title;
 }

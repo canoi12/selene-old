@@ -39,6 +39,13 @@ void draw_values(Vector * vec) {
   }
 }
 
+typedef struct player {
+  int _x;
+  int _y;
+  int _width;
+  int _height;
+} Player;
+
 int main(int argc, char* argv[]) {
 
   selene_init(640, 480, SDL_WINDOW_OPENGL);
@@ -55,8 +62,7 @@ int main(int argc, char* argv[]) {
   for (int x = 0; x < (NIMAGES*NIMAGES); x++) {
     insert_vector(vec, image);
   }*/
-  printf("wow\n");
-  Image * img = selene_create_image("assets/843.jpg");
+  Image * img = selene_create_image("assets/astronaut.png");
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
 
@@ -65,12 +71,24 @@ int main(int argc, char* argv[]) {
 
   int frames = 0;
   Uint32 starttime = SDL_GetTicks();
+
+  float frametime = 0.0f;
+
+  Quad quad[] = {
+    {0, 16, 16, 16},
+    {16, 16, 16, 16},
+    {32, 16, 16, 16},
+    {48, 16, 16, 16},
+    {64, 16, 16, 16}
+  };
+
+  int frame = 0;
   
-  while (engine->_running) {
+  while (CORE->_running) {
     selene_poll_event();
 
-    if (engine->_event.type == SDL_QUIT) {
-      engine->_running = SELENE_FALSE;
+    if (CORE->_event.type == SDL_QUIT) {
+      CORE->_running = SELENE_FALSE;
     }
 
     if (selene_key_down("left")) {
@@ -82,10 +100,21 @@ int main(int argc, char* argv[]) {
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     selene_use_default_shader();
 
+    frametime += 0.1f;
+    if (frametime >= 0.6f) {
+      frametime = 0.f;
+      frame += 1;
+      if (frame >= 5) {
+	frame = 0;
+      }
+    }
+
     //draw_values(vec);
-    Quad quad = {0, 0, 720, 960};
-    selene_draw_image(img, NULL, 0, 0);
-    
+    //printf("%d\n", frame);
+    Quad * q;
+    q = quad + frame;
+    selene_draw_image_ex(img, q, 320, 240, 4.0, 4.0, 0, 32, 32);
+
     glDisable(GL_BLEND);
     selene_swap_window();
 
@@ -95,7 +124,7 @@ int main(int argc, char* argv[]) {
     if (currenttime) {
       double seconds = currenttime / 1000.0;
       double fps = frames / seconds;
-      printf("%f FPS\n", fps);
+      //printf("%f FPS\n", fps);
     }
   }
 

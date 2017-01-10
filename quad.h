@@ -1,7 +1,7 @@
 #ifndef _QUAD_H_
 #define _QUAD_H_
 
-typedef union quad_s {
+typedef union {
   struct {
     int _x;
     int _y;

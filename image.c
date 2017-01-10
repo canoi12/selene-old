@@ -101,9 +101,47 @@ void selene_draw_image(Image * image, Quad * quad, int x, int y) {
     mat4x4_scale_aniso(model, model, selene_get_image_width(image), selene_get_image_height(image), 0.0f);
   }
   
-  selene_send_uniform(engine->_default_shader, "model", 16, *model);
-  selene_send_uniform(engine->_default_shader, "spriteFrame" , 4, tex);
+  selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "spriteFrame" , 4, tex);
   
+  glBindTexture(GL_TEXTURE_2D, image->_tex);
+  glBindVertexArray(image->_vao);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(0);
+  glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void selene_draw_image_ex(Image * image, Quad * quad, int x, int y, float sx, float sy, float angle, float cx, float cy) {
+  mat4x4 model;
+  mat4x4 aux;
+
+  mat4x4_translate(model, x, y, 0.0);
+
+  mat4x4_rotate_Z(model, model, toRadians(angle));
+  mat4x4_translate_mul(model, -cx * sx, -cy * sy, 0.0);
+  
+  vec4 tex;
+  if (quad) {
+
+    for (int i = 0; i < 4; i++) {
+      float d = i % 2 == 0 ? (float)selene_get_image_width(image) : (float) selene_get_image_height(image);
+      tex[i] = (float)quad->_attr[i] / d;
+    }
+    
+    mat4x4_scale_aniso(model, model, quad->_width * sx, quad->_height * sy, 0.0f);
+  } else {
+    tex[0] = 0.0f;
+    tex[1] = 0.0f;
+
+    tex[2] = 1.0f;
+    tex[3] = 1.0f;
+    mat4x4_scale_aniso(model, model, selene_get_image_width(image) * sx, selene_get_image_height(image) * sy, 0.0f);
+  }
+  
+  selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "spriteFrame" , 4, tex);
+  
+
   glBindTexture(GL_TEXTURE_2D, image->_tex);
   glBindVertexArray(image->_vao);
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

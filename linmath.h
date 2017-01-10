@@ -177,6 +177,17 @@ static inline void mat4x4_translate(mat4x4 T, float x, float y, float z)
 	T[3][1] = y;
 	T[3][2] = z;
 }
+static inline void mat4x4_translate_mul(mat4x4 T, float x, float y, float z)
+{
+  mat4x4 R;
+  mat4x4_identity(R);
+
+  R[3][0] = x;
+  R[3][1] = y;
+  R[3][2] = z;
+
+  mat4x4_mul(T, T, R);
+}
 static inline void mat4x4_translate_in_place(mat4x4 M, float x, float y, float z)
 {
 	vec4 t = {x, y, z, 0};

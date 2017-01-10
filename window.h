@@ -3,7 +3,7 @@
 
 #include "selene.h"
 
-typedef struct window_s {
+typedef struct window {
   SDL_Window * _window;
   const char * _title;
   int _width;

@@ -29,10 +29,10 @@ typedef enum {
   SELENE_FALSE = 0
 } sel_bool;
 
-typedef struct window_s Window;
-typedef struct shader_s Shader;
+typedef struct window Window;
+typedef struct shader Shader;
 
-typedef struct selene_s {
+typedef struct {
   Window * _window;
   SDL_GLContext * _context;
   const Uint8 * _keyArray;
@@ -41,7 +41,7 @@ typedef struct selene_s {
   Shader * _default_shader;
 } Selene;
 
-Selene * engine;
+Selene * CORE;
 
 void selene_init(int width, int height, GLenum flags);
 
