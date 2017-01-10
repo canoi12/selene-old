@@ -8,7 +8,7 @@ Biblioteca de terceiros estou usando:
 ![Selene Engine](https://raw.githubusercontent.com/canoi12/canoi12.github.io/master/ImagensSite/selene_engine.png)
 
 # TODOS
-- [ ] Adicionar suporte a soms.
+- [ ] Adicionar suporte a sons.
 - [ ] Implementar Sprite Batch para otimizar drawcalls
 - [ ] Adicionar suporte a fontes.
 - [ ] Organizar melhor o código e a estrutura da engine.
