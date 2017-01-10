@@ -65,10 +65,7 @@ int main(int argc, char* argv[]) {
   Image * img = selene_create_image("assets/astronaut.png");
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
-
-  int x, y;
-  float dy;
-
+  
   int frames = 0;
   Uint32 starttime = SDL_GetTicks();
 
@@ -83,6 +80,8 @@ int main(int argc, char* argv[]) {
   };
 
   int frame = 0;
+
+  int x=0, y=0;
   
   while (CORE->_running) {
     selene_poll_event();
@@ -92,7 +91,10 @@ int main(int argc, char* argv[]) {
     }
 
     if (selene_key_down("left")) {
-      printf("Key Left Pressed\n");
+      x -= 2;
+    }
+    if (selene_key_down("right")) {
+      x += 2;
     }
     // Clear the screen
     selene_clear_screen();
@@ -109,11 +111,13 @@ int main(int argc, char* argv[]) {
       }
     }
 
+    selene_translate_camera(x, 0.0f);
+
     //draw_values(vec);
     //printf("%d\n", frame);
     Quad * q;
     q = quad + frame;
-    selene_draw_image_ex(img, q, 320, 240, 4.0, 4.0, 0, 32, 32);
+    selene_draw_image_ex(img, q, 0, 0, -4.0, 4.0, 0, 8, 8);
 
     glDisable(GL_BLEND);
     selene_swap_window();

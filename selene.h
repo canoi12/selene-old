@@ -61,6 +61,10 @@ int selene_key_up(const char * key);
 
 void selene_use_default_shader();
 
+void selene_translate_camera(int x, int y);
+
+void selene_scale_camera(int width, int height);
+
 void selene_terminate();
 
 #endif // _SELENE_H_

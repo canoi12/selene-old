@@ -71,16 +71,28 @@ int selene_key_up(const char * key) {
 
 void selene_use_default_shader() {
   mat4x4 world;
-  mat4x4 view;
+  
 
   mat4x4_ortho(world, 0.0, (float) selene_get_window_width(), (float) selene_get_window_height(), 0.0, 0.0, 1.0);
 
-  mat4x4_identity(view);
-  mat4x4_translate(view, 0, 0, 0);
-  mat4x4_scale_aniso(view, view, 1.0f, 1.0f, 0.0f);
-
   selene_use_shader(CORE->_default_shader);
+
+  selene_translate_camera(0, 0);
+  selene_scale_camera(1.0, 1.0);
   selene_send_uniform(CORE->_default_shader, "world", 16, *world);
+}
+
+void selene_translate_camera(int x, int y) {
+  mat4x4 view;
+  mat4x4_identity(view);
+  mat4x4_translate(view, x, y, 0);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
+}
+
+void selene_scale_camera(int width, int height) {
+  mat4x4 view;
+  mat4x4_identity(view);
+  mat4x4_scale_aniso(view, view, 1.0f, 1.0f, 0.0f);
   selene_send_uniform(CORE->_default_shader, "view", 16, *view);
 }
 
