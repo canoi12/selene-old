@@ -82,6 +82,7 @@ int main(int argc, char* argv[]) {
   int frame = 0;
 
   int x=0, y=0;
+  float flip = 1.0f;
   
   while (CORE->_running) {
     selene_poll_event();
@@ -91,10 +92,12 @@ int main(int argc, char* argv[]) {
     }
 
     if (selene_key_down("left")) {
-      x -= 2;
+      x -= 4;
+      flip = -1.0f;
     }
     if (selene_key_down("right")) {
-      x += 2;
+      x += 4;
+      flip = 1.0f;
     }
     // Clear the screen
     selene_clear_screen();
@@ -117,7 +120,7 @@ int main(int argc, char* argv[]) {
     //printf("%d\n", frame);
     Quad * q;
     q = quad + frame;
-    selene_draw_image_ex(img, q, 0, 0, -4.0, 4.0, 0, 8, 8);
+    selene_draw_image_ex(img, q, 0, 32, 4.0 * flip, 4.0, 0, 8, 8);
 
     glDisable(GL_BLEND);
     selene_swap_window();

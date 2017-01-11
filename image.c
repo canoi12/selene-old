@@ -65,6 +65,8 @@ Image * selene_create_image(const char * path) {
 
   stbi_image_free(img);
   glBindTexture(GL_TEXTURE_2D, 0);
+
+  //selene_add_text_data(name, image->_tex);
   
   return image;
 }

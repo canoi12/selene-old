@@ -39,6 +39,8 @@ void selene_init(int width, int height, Uint32 flags) {
   CORE->_keyArray = SDL_GetKeyboardState(NULL);
 
   CORE->_default_shader = selene_create_shader("vert.glsl", "frag.glsl");
+
+  //selene_init_texture_manager();
 }
 
 void selene_init_data() {

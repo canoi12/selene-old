@@ -17,6 +17,7 @@
 #include "shader.h"
 #include "image.h"
 #include "quad.h"
+#include "texturemanager.h"
 
 #define min(a,b) (a < b ? a : b)
 #define max(a,b) (a > b ? a : b)
