@@ -11,7 +11,7 @@ Biblioteca de terceiros estou usando:
 
 # TODOS
 - [ ] Adicionar suporte a sons.
-- [ ] Implementar Sprite Batch para otimizar drawcalls
+- [x] Implementar Sprite Batch para otimizar drawcalls. (porém ainda é bem simples, vou revisar, e ver possíveis melhorias)
 - [ ] Adicionar suporte a fontes.
 - [ ] Organizar melhor o código e a estrutura da engine.
 - [ ] O que mais eu lembrar.
