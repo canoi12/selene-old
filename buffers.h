@@ -2,15 +2,15 @@
 #define _BUFFERS_H_
 
 typedef struct {
-  GLuint vao;
+  GLuint _vao;
 } vao_buffer;
 
 typedef struct {
-  GLuint vbo;
+  GLuint _vbo;
 } vbo_buffer;
 
 typedef struct {
-  GLuint ebo;
+  GLuint _ebo;
 } ebo_buffer;
 
 

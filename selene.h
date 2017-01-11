@@ -18,6 +18,7 @@
 #include "image.h"
 #include "quad.h"
 #include "texturemanager.h"
+#include "spritebatch.h"
 
 #define min(a,b) (a < b ? a : b)
 #define max(a,b) (a > b ? a : b)
@@ -32,6 +33,7 @@ typedef enum {
 
 typedef struct window Window;
 typedef struct shader Shader;
+typedef struct image Image;
 
 typedef struct {
   Window * _window;
@@ -64,7 +66,7 @@ void selene_use_default_shader();
 
 void selene_translate_camera(int x, int y);
 
-void selene_scale_camera(int width, int height);
+void selene_scale_camera(float width, float height);
 
 void selene_terminate();
 

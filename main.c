@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
     insert_vector(vec, image);
   }*/
   Image * img = selene_create_image("assets/astronaut.png");
+  Image * img2 = selene_create_image("assets/bg_sky.png");
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
   
@@ -83,6 +84,27 @@ int main(int argc, char* argv[]) {
 
   int x=0, y=0;
   float flip = 1.0f;
+
+  SpriteBatch * batch = selene_create_sprite_batch(img2, 1000000);
+
+  int ys = 0;
+  int xs = 0;
+  for (int j = 0; j < 500; j++) {
+    int xs = 0;
+    for (int i = 0; i < 500; i++) {
+      Quad qt = {0, 0, 128, 128};
+      if (i % 100 == 0) {
+	xs += 4;
+      }
+      selene_sprite_batch_add(batch, &qt, i * (128 + xs), j * (128 + ys));
+    }
+    if (j % 100 == 0) {
+      ys += 4;
+    }
+  }
+
+  float scalex = 1.0f;
+  float scaley = 1.0f;
   
   while (CORE->_running) {
     selene_poll_event();
@@ -99,6 +121,20 @@ int main(int argc, char* argv[]) {
       x += 4;
       flip = 1.0f;
     }
+    if (selene_key_down("up")) {
+      y -= 4;
+    }
+    if (selene_key_down("down")) {
+      y += 4;
+    }
+
+    if (selene_key_down("A")) {
+      scalex -= 0.001f;
+      scaley -= 0.001f;
+    } else if(selene_key_down("D")) {
+      scalex += 0.001f;
+      scaley += 0.001f;
+    }
     // Clear the screen
     selene_clear_screen();
     glEnable(GL_BLEND);
@@ -114,14 +150,17 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    selene_translate_camera(x, 0.0f);
+    selene_translate_camera(-x, -y);
+    selene_scale_camera(scalex, scalex);
 
     //draw_values(vec);
     //printf("%d\n", frame);
     Quad * q;
     q = quad + frame;
-    selene_draw_image_ex(img, q, 0, 32, 4.0 * flip, 4.0, 0, 8, 8);
-
+    //for (int i = 0; i < 250000; i++)
+    //selene_draw_image_ex(img, NULL, 0, 32, 4.0 * flip, 4.0, 0, 8, 8);
+    selene_sprite_batch_draw(batch);
+    
     glDisable(GL_BLEND);
     selene_swap_window();
 
@@ -131,7 +170,7 @@ int main(int argc, char* argv[]) {
     if (currenttime) {
       double seconds = currenttime / 1000.0;
       double fps = frames / seconds;
-      //printf("%f FPS\n", fps);
+      printf("%f FPS\n", fps);
     }
   }
 

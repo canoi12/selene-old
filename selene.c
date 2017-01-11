@@ -1,5 +1,7 @@
 #include "selene.h"
 
+mat4x4 view;
+
 void selene_init(int width, int height, Uint32 flags) {
   CORE = (Selene*) malloc(sizeof(Selene));
   CORE->_running = SELENE_TRUE;
@@ -32,13 +34,15 @@ void selene_init(int width, int height, Uint32 flags) {
   
   glViewport(0, 0, CORE->_window->_width, CORE->_window->_height);
 
-  if ( SDL_GL_SetSwapInterval(1) < 0) {
+  if ( SDL_GL_SetSwapInterval(0) < 0) {
     printf("Your hardware don't support Vsync\n");
   }
 
   CORE->_keyArray = SDL_GetKeyboardState(NULL);
 
   CORE->_default_shader = selene_create_shader("vert.glsl", "frag.glsl");
+
+  mat4x4_identity(view);
 
   //selene_init_texture_manager();
 }
@@ -85,16 +89,13 @@ void selene_use_default_shader() {
 }
 
 void selene_translate_camera(int x, int y) {
-  mat4x4 view;
   mat4x4_identity(view);
   mat4x4_translate(view, x, y, 0);
   selene_send_uniform(CORE->_default_shader, "view", 16, *view);
 }
 
-void selene_scale_camera(int width, int height) {
-  mat4x4 view;
-  mat4x4_identity(view);
-  mat4x4_scale_aniso(view, view, 1.0f, 1.0f, 0.0f);
+void selene_scale_camera(float width, float height) {
+  mat4x4_scale_aniso(view, view, width, height, 0.0f);
   selene_send_uniform(CORE->_default_shader, "view", 16, *view);
 }
 
