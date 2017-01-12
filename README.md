@@ -2,7 +2,7 @@ Esta é minha pequena tentativa de fazer algo com o Modern OpenGL e a linguagem 
 
 Assets usados para test:
 - Imagens achadas na internet; xD
-- Fonte [`Early GameBoy`] do [`Jimmy Campbell`][http://www.dafont.com/pt/jimmy-campbell.d5241]
+- Fonte `Early GameBoy` do [`Jimmy Campbell`](http://www.dafont.com/pt/jimmy-campbell.d5241)
 
 Biblioteca de terceiros estou usando:
 - [`SDL2`](https://www.libsdl.org/) para criar um Contexto OpenGL
