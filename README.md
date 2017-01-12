@@ -19,6 +19,10 @@ Biblioteca de terceiros estou usando:
 
 ![Sele Engine](https://raw.githubusercontent.com/canoi12/selene/master/assets/spritebatch.gif)
 
+# DEPENDÊNCIAS
+- `SDL2`
+- `SDL2_ttf`
+
 # TODOS
 - [ ] Adicionar suporte a sons.
 - [x] Implementar Sprite Batch para otimizar drawcalls. (porém ainda é bem simples, vou revisar, e ver possíveis melhorias)
