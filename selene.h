@@ -10,6 +10,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "linmath.h"
 
@@ -19,6 +20,7 @@
 #include "quad.h"
 #include "texturemanager.h"
 #include "spritebatch.h"
+#include "font.h"
 
 #define min(a,b) (a < b ? a : b)
 #define max(a,b) (a > b ? a : b)
@@ -34,6 +36,7 @@ typedef enum {
 typedef struct window Window;
 typedef struct shader Shader;
 typedef struct image Image;
+typedef struct font Font;
 
 typedef struct {
   Window * _window;
@@ -42,6 +45,7 @@ typedef struct {
   SDL_Event _event;
   sel_bool _running;
   Shader * _default_shader;
+  Font * _current_font;
 } Selene;
 
 Selene * CORE;

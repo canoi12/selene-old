@@ -64,6 +64,8 @@ int main(int argc, char* argv[]) {
   }*/
   Image * img = selene_create_image("assets/astronaut.png");
   Image * img2 = selene_create_image("assets/bg_sky.png");
+  SDL_Color color = {255, 255, 255, 255};
+  Font * font = selene_create_font("assets/Early GameBoy.ttf", 16, color);
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
   
@@ -105,6 +107,8 @@ int main(int argc, char* argv[]) {
 
   float scalex = 1.0f;
   float scaley = 1.0f;
+
+  selene_set_font(font);
   
   while (CORE->_running) {
     selene_poll_event();
@@ -127,13 +131,13 @@ int main(int argc, char* argv[]) {
     if (selene_key_down("down")) {
       y += 4;
     }
-
+    
     if (selene_key_down("A")) {
-      scalex -= 0.001f;
-      scaley -= 0.001f;
+      scalex -= 0.01f;
+      scaley -= 0.01f;
     } else if(selene_key_down("D")) {
-      scalex += 0.001f;
-      scaley += 0.001f;
+      scalex += 0.01f;
+      scaley += 0.01f;
     }
     // Clear the screen
     selene_clear_screen();
@@ -160,9 +164,6 @@ int main(int argc, char* argv[]) {
     //for (int i = 0; i < 250000; i++)
     //selene_draw_image_ex(img, NULL, 0, 32, 4.0 * flip, 4.0, 0, 8, 8);
     selene_sprite_batch_draw(batch);
-    
-    glDisable(GL_BLEND);
-    selene_swap_window();
 
     ++frames;
 
@@ -170,8 +171,13 @@ int main(int argc, char* argv[]) {
     if (currenttime) {
       double seconds = currenttime / 1000.0;
       double fps = frames / seconds;
-      printf("%f FPS\n", fps);
+      //printf("%f FPS\n", fps);
+      char * fps_text = malloc(sizeof(char) * 5);
+      sprintf(fps_text, "%f", fps);
+      selene_print_text(fps_text, 0, 0);
     }
+    glDisable(GL_BLEND);
+    selene_swap_window();
   }
 
   selene_terminate();
