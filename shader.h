@@ -26,4 +26,6 @@ void selene_use_shader(Shader * shader);
 
 void selene_send_uniform(Shader * shader, const char * name, int size, const float * value);
 
+void selene_delete_shader(Shader* shader);
+
 #endif // _SHADER_H_

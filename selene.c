@@ -104,9 +104,11 @@ void selene_scale_camera(float width, float height) {
 }
 
 void selene_terminate() {
-  SDL_DestroyWindow(CORE->_window->_window);
   SDL_GL_DeleteContext(CORE->_context);
-  free(CORE->_window);
-  free(CORE);
+  selene_destroy_window(CORE->_window);
+  //free(CORE->_keyArray);
+  selene_delete_shader(CORE->_default_shader);
+  selene_destroy_font(CORE->_current_font);
+  free((void*)CORE);
   SDL_Quit();
 }

@@ -120,3 +120,11 @@ void selene_sprite_batch_draw(SpriteBatch * batch) {
   glBindVertexArray(0);
   glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void selene_destroy_sprite_batch(SpriteBatch* batch) {
+  glDeleteVertexArrays(1, &(batch->_vao));
+  glDeleteBuffers(1, &(batch->_vbo));
+  glDeleteBuffers(1, &(batch->_ebo));
+  selene_destroy_image(batch->_image);
+  free(batch);
+}

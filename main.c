@@ -180,6 +180,8 @@ int main(int argc, char* argv[]) {
     selene_swap_window();
   }
 
+  selene_destroy_image(img);
+  selene_destroy_sprite_batch(batch);
   selene_terminate();
 
   return 0;

@@ -7,7 +7,7 @@ void selene_add_text_data(const char * name, GLuint tex) {
     p = p->_next;
   }
   p->_next = malloc(sizeof(textData));
-  p->_next->_name = name;
+  p->_next->_name = (char*)name;
   p->_tex = tex;
   p->_next = NULL;
 

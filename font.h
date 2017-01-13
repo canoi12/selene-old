@@ -18,4 +18,6 @@ void selene_set_font_color(SDL_Color color);
 
 void selene_print_text(const char * text, int x, int y);
 
+void selene_destroy_font(Font* font);
+
 #endif // _FONT_H_

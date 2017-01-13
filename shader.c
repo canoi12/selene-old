@@ -94,3 +94,7 @@ void selene_send_uniform(Shader * shader, const char * name, int size, const flo
     break;
   }
 }
+
+void selene_delete_shader(Shader* shader) {
+  free(shader);
+}

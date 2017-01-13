@@ -22,6 +22,7 @@ Biblioteca de terceiros estou usando:
 # DEPENDÊNCIAS
 - `SDL2`
 - `SDL2_ttf`
+- `GLEW`
 
 # TODOS
 - [ ] Adicionar suporte a sons.

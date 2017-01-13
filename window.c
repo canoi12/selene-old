@@ -39,3 +39,9 @@ void selene_set_window_title(const char * title) {
   SDL_SetWindowTitle(CORE->_window->_window, title);
   CORE->_window->_title = title;
 }
+
+void selene_destroy_window(Window * window) {
+  SDL_DestroyWindow(window->_window);
+  free((void*)window->_title);
+  free((void*)window);
+}

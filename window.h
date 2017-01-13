@@ -23,4 +23,6 @@ int selene_get_window_height();
 
 void selene_set_window_title(const char * title);
 
+void selene_destroy_window(Window* window);
+
 #endif // _WINDOW_H_

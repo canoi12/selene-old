@@ -20,4 +20,6 @@ void selene_sprite_batch_add(SpriteBatch * batch, Quad * quad, int x, int y);
 
 void selene_sprite_batch_draw(SpriteBatch * batch);
 
+void selene_destroy_sprite_batch(SpriteBatch* batch);
+
 #endif // _SPRITEBATCH_H_

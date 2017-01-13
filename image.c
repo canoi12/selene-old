@@ -5,6 +5,17 @@
 
 Image * selene_create_image(const char * path) {
   Image * image = (Image*) malloc(sizeof(Image));  
+
+  image->_filtermin = malloc(sizeof(char) * 50);
+  image->_filtermag = malloc(sizeof(char) * 50);
+
+  image->_wraps = malloc(sizeof(char) * 50);
+  image->_wrapt = malloc(sizeof(char) * 50);
+  
+  image->_filtermin = "nearest";
+  image->_filtermag = "nearest";
+  image->_wraps = "clamp";
+  image->_wrapt = "clamp";
   
   float vertices[] = {
     0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
@@ -69,6 +80,71 @@ Image * selene_create_image(const char * path) {
   //selene_add_text_data(name, image->_tex);
   
   return image;
+}
+
+void selene_set_image_filter(Image * image, const char * filtermin, const char * filtermag) {
+
+  /***************** Filter Min *******************/
+  if (filtermin == "linear") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if (filtermin == "nearest") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else {
+    printf("%s is not a valid filter min\n", filtermin);
+  }
+  /************** Filter Mag ***************/
+  if (filtermag == "linear") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if(filtermag == "linear") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else {
+    printf("%s is not a valid filter mag\n", filtermag);
+  }
+}
+
+void selene_set_image_wrap(Image * image, const char * wraps, const char * wrapt) {
+
+  /************* WRAP S ***************/
+  if (wraps == "repeat") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if (wraps == "mirrored_repeat") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if(wraps == "clamp") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else {
+    printf("%s is not a valid Wrap S\n", wraps);
+  }
+
+  /**************** WRAP T ***************/
+  if (wrapt == "repeat") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if (wrapt == "mirrored_repeat") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else if(wrapt == "clamp") {
+    glBindTexture(GL_TEXTURE_2D, image->_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  } else {
+    printf("%s is not a valid Wrap T\n", wrapt);
+  }
 }
 
 int selene_get_image_width(Image * image) {
@@ -149,4 +225,16 @@ void selene_draw_image_ex(Image * image, Quad * quad, int x, int y, float sx, fl
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
   glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void selene_destroy_image(Image* image) {
+  glDeleteVertexArrays(1, &(image->_vao));
+  glDeleteBuffers(1, &(image->_vbo));
+  glDeleteBuffers(1, &(image->_ebo));
+  glDeleteTextures(1, &(image->_tex));
+  free(image->_filtermag);
+  free(image->_filtermin);
+  free(image->_wraps);
+  free(image->_wrapt);
+  free(image);
 }

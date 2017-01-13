@@ -111,3 +111,11 @@ void selene_print_text(const char * text, int x, int y) {
   SDL_FreeSurface(s);
   glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void selene_destroy_font(Font* font) {
+  TTF_CloseFont(font->_font);
+  glDeleteVertexArrays(1, &(font->_vao));
+  glDeleteBuffers(1, &(font->_vbo));
+  glDeleteBuffers(1, &(font->_ebo));
+  free(font);
+}
