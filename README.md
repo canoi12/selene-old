@@ -4,10 +4,11 @@ Assets usados para test:
 - Imagens achadas na internet; xD
 - Fonte `Early GameBoy` do [`Jimmy Campbell`](http://www.dafont.com/pt/jimmy-campbell.d5241)
 
-Biblioteca de terceiros estou usando:
+Biblioteca de terceiros que estou usando:
 - [`SDL2`](https://www.libsdl.org/) para criar um Contexto OpenGL
 - [`stb_image`](https://github.com/nothings/stb) para carregar as imagens
 - [`linmath`](https://github.com/datenwolf/linmath.h) para usar operações de algebra linear com vetores e matrizes.
+- [`GLEW`](http://glew.sourceforge.net/) para acessar funções das versões mais novas do OpenGL.
 
 # Engine
 
