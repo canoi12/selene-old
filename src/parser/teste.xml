@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<funcionarios>
+  <funcionario ID="2107">
+    <nome>Canoi Gomes</nome>
+    <testando value="50"/>
+    <salario>20000</salario>
+  </funcionario>
+  <funcionario ID="2208">
+    <nome>Tostão</nome>
+    <salario>25000</salario>
+  </funcionario>
+  <funcionario ID="2309">
+    <nome>Grana</nome>
+    <salario>30000</salario>
+  </funcionario>
+</funcionarios>
+<games>
+  <game>
+    <nome>Shadow of the Colossus</nome>
+  </game>
+</games>

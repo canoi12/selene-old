@@ -5,7 +5,7 @@
 
 typedef struct window {
   SDL_Window * _window;
-  const char * _title;
+  char * _title;
   int _width;
   int _height;
   Uint32 _flags;

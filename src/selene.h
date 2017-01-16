@@ -27,6 +27,9 @@
 #define clamp(x, v1, v2) (min(v2, max(x, v1)))
 #define toRadians(x) (x * (M_PI / 180.0))
 #define toDegrees(x) (x * (180.0 / M_PI))
+#define DEFAULT_VERT_SHADER_PATH "src/vert.glsl"
+#define DEFAULT_FRAG_SHADER_PATH "src/frag.glsl"
+
 
 typedef enum {
   SELENE_TRUE = 1,
@@ -44,7 +47,7 @@ typedef struct {
   const Uint8 * _keyArray;
   SDL_Event _event;
   sel_bool _running;
-  Shader * _default_shader;
+  Shader * _default_shader; // src/vert.glsl - src/frag.glsl
   Font * _current_font;
 } Selene;
 

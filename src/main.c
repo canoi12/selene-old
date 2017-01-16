@@ -44,28 +44,26 @@ typedef struct player {
   int _y;
   int _width;
   int _height;
+  Image* _image;
+  Quad* _quad;
 } Player;
+
+void init_player(Player* player) {
+  player->_image = selene_create_image("src/assets/astronaut.png");
+}
+
+void update_player(Player* player) {
+
+}
 
 int main(int argc, char* argv[]) {
 
   selene_init(640, 480, SDL_WINDOW_OPENGL);
 
-  Shader * shader = selene_create_shader("vert.glsl", "frag.glsl");
-  
-  //Image * image = selene_create_image("assets/astronaut.png");
-
-  //Image image[2500];
-  /*Vector * vec = malloc(sizeof(Vector));
-  vec->next = NULL;
-
-  Image * image = selene_create_image("assets/astronaut.png");
-  for (int x = 0; x < (NIMAGES*NIMAGES); x++) {
-    insert_vector(vec, image);
-  }*/
-  Image * img = selene_create_image("assets/astronaut.png");
-  Image * img2 = selene_create_image("assets/bg_sky.png");
+  Image * img = selene_create_image("src/assets/astronaut.png");
+  Image * img2 = selene_create_image("src/assets/bg_sky.png");
   SDL_Color color = {255, 255, 255, 255};
-  Font * font = selene_create_font("assets/Early GameBoy.ttf", 16, color);
+  Font * font = selene_create_font("src/assets/Early GameBoy.ttf", 16, color);
   
   glClearColor(0.2, 0.3, 0.3, 1.0);
   

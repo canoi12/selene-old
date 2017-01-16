@@ -5,7 +5,10 @@ Window * selene_create_window(const char * title, int width, int height, Uint32 
 
   window->_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 
-  window->_title = title;
+  window->_title = calloc(50, sizeof(char));
+
+  //window->_title = title;
+  strcpy(window->_title, title);
   window->_width = width;
   window->_height = height;
 
@@ -37,7 +40,8 @@ int selene_get_window_height() {
 
 void selene_set_window_title(const char * title) {
   SDL_SetWindowTitle(CORE->_window->_window, title);
-  CORE->_window->_title = title;
+  strcpy(CORE->_window->_title, title);
+  //CORE->_window->_title = title;
 }
 
 void selene_destroy_window(Window * window) {

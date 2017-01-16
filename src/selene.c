@@ -44,7 +44,7 @@ void selene_init(int width, int height, Uint32 flags) {
 
   CORE->_keyArray = SDL_GetKeyboardState(NULL);
 
-  CORE->_default_shader = selene_create_shader("vert.glsl", "frag.glsl");
+  CORE->_default_shader = selene_create_shader(DEFAULT_VERT_SHADER_PATH, DEFAULT_FRAG_SHADER_PATH);
 
   mat4x4_identity(view);
 

@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-lGL -lGLEW -lSDL2 -lSDL2_ttf -lm
-FILES=*.c
+FILES=src/*.c src/parser/*.c
 PROGRAM=engine
 
 hello:
