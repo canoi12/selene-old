@@ -12,13 +12,13 @@ Biblioteca de terceiros que estou usando:
 
 # Engine
 
-![Selene Engine](https://raw.githubusercontent.com/canoi12/selene/master/assets/animation.gif)
+![Selene Engine](https://raw.githubusercontent.com/canoi12/selene/master/src/assets/animation.gif)
 
 ![Selene Engine](https://raw.githubusercontent.com/canoi12/canoi12.github.io/master/ImagensSite/selene_engine.png)
 
 # SpriteBatch funcionando (renderizando 250000 objetos a 200 fps):
 
-![Sele Engine](https://raw.githubusercontent.com/canoi12/selene/master/assets/spritebatch.gif)
+![Sele Engine](https://raw.githubusercontent.com/canoi12/selene/master/src/assets/spritebatch.gif)
 
 # DEPENDÊNCIAS
 - `SDL2`
