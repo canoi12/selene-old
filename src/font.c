@@ -70,6 +70,8 @@ void selene_set_font_color(SDL_Color color) {
 }
 
 void selene_print_text(const char * text, int x, int y) {
+  selene_use_default_shader();
+  
   SDL_Surface * surface = TTF_RenderText_Blended(CORE->_current_font->_font, text, CORE->_current_font->_color);
 
   GLuint texture;

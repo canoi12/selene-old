@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 
   int frame = 0;
 
-  int x=0, y=0;
+  int x=320, y=240;
   float flip = 1.0f;
 
   SpriteBatch * batch = selene_create_sprite_batch(img2, 1000000);
@@ -107,6 +107,54 @@ int main(int argc, char* argv[]) {
   float scaley = 1.0f;
 
   selene_set_font(font);
+
+  int numOfSegs = 1000;
+  float radius = 160;
+
+  float segmentsx[(numOfSegs + 2)];
+  float segmentsy[(numOfSegs + 2)];
+
+  GLfloat doublePi = M_PI * 2.0f;
+  segmentsx[0] = x;
+  segmentsy[0] = y;
+    
+
+  for (int i = 0; i < (numOfSegs + 2); i++) {
+    float theta = (doublePi * i) / (float)(numOfSegs + 2);
+    segmentsx[i] = x + (radius * cos(theta));
+    segmentsy[i] = y + (radius * sin(theta));
+  }
+
+  float segments[(numOfSegs + 2) * 2];
+
+  for (int i = 0; i < (numOfSegs + 2); i++) {
+    segments[i * 2] = segmentsx[i];
+    segments[(i * 2) + 1] = segmentsy[i];
+  }
+
+  GLuint vao, vbo;
+  glGenVertexArrays(1, &vao);
+  glGenBuffers(1, &vbo);
+
+  glBindVertexArray(vao);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+  glBufferData(GL_ARRAY_BUFFER, sizeof(segments), segments, GL_STATIC_DRAW);
+
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
+  
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+
+  vec2 p0 = {64, 64};
+  vec2 p1 = {74, 156};
+  vec2 p2 = {156, 74};
+  vec2 p3 = {256, 256};
+
+  int xb, yb;
+
+  Bezier* bezier = selene_create_bezier(p0, p1, p2, p3);
   
   while (CORE->_running) {
     selene_poll_event();
@@ -152,16 +200,19 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    selene_translate_camera(-x, -y);
+    selene_translate_camera(0, 0);
     selene_scale_camera(scalex, scalex);
-
     //draw_values(vec);
     //printf("%d\n", frame);
     Quad * q;
     q = quad + frame;
     //for (int i = 0; i < 250000; i++)
     //selene_draw_image_ex(img, NULL, 0, 32, 4.0 * flip, 4.0, 0, 8, 8);
-    selene_sprite_batch_draw(batch);
+
+    //selene_sprite_batch_draw(batch);
+
+    //selene_draw_circle("filled", x, 64, 32, 20);
+    selene_draw_bezier_curve(bezier, 100, 1);
 
     ++frames;
 

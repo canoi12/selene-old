@@ -21,6 +21,7 @@
 #include "texturemanager.h"
 #include "spritebatch.h"
 #include "font.h"
+#include "primitives.h"
 
 #define min(a,b) (a < b ? a : b)
 #define max(a,b) (a > b ? a : b)

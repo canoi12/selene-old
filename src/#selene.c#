@@ -96,7 +96,6 @@ void selene_use_default_shader() {
 void selene_translate_camera(int x, int y) {
   mat4x4_translate(view, x, y, 0);
   selene_send_uniform(CORE->_default_shader, "view", 16, *view);
-  printf("%f %f\n", view[3][0], view[3][1]);
 }
 
 void selene_scale_camera(float width, float height) {
