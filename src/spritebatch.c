@@ -109,8 +109,8 @@ void selene_sprite_batch_draw(SpriteBatch * batch) {
   text_coord[2] = 1.0f;
   text_coord[3] = 1.0f;
 
-  selene_send_uniform(CORE->_default_shader, "model", 16, *model);
-  selene_send_uniform(CORE->_default_shader, "spriteFrame", 4, text_coord);
+  selene_send_uniform(CORE->_current_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_current_shader, "spriteFrame", 4, text_coord);
   
   glBindTexture(GL_TEXTURE_2D, batch->_image->_tex);
   glBindVertexArray(batch->_vao);

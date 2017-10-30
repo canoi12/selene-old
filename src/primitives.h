@@ -45,6 +45,8 @@ void selene_draw_circle(const char* filled, int x, int y, float radius, int numO
 
 void selene_draw_rectangle(const char* filled, int x, int y, float width, float height);
 
+void selene_draw_rectangle_quad(const char* filled, Quad quad);
+
 void selene_draw_triangle(const char* filled, int x1, int y1, int x2, int y2, int x3, int y3);
 
 void selene_draw_line(int x1, int y1, int x2, int y2);

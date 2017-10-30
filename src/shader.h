@@ -16,9 +16,16 @@ typedef struct shader {
   GLuint _ID;
 } Shader;
 
-Shader * selene_create_shader(const char * vert_path, const char * frag_path);
+typedef struct {
+  char * VertexSource;
+  char * FragmentSource;
+} ShaderProgramSource;
+
+Shader * selene_create_shader(const char * path);
 
 GLuint selene_load_shader(const char * path, GLenum type);
+
+ShaderProgramSource selene_parse_shader(const char * path);
 
 char * selene_load_shader_source(const char * path);
 

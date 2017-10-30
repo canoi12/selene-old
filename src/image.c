@@ -3,8 +3,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+extern mat4x4 view;
+
 Image * selene_create_image(const char * path) {
-  Image * image = (Image*) malloc(sizeof(Image));  
+  Image * image = (Image*) malloc(sizeof(Image));
+
+  int w, h, comp;
+  unsigned char * img = stbi_load(path, &(image->_width), &(image->_height), &comp, STBI_rgb_alpha);
 
   image->_filtermin = malloc(sizeof(char) * 50);
   image->_filtermag = malloc(sizeof(char) * 50);
@@ -21,13 +26,33 @@ Image * selene_create_image(const char * path) {
   //image->_wrapt = "clamp";
   strcpy(image->_wrapt, "clamp");
   
-  float vertices[] = {
+  /*float vertices[] = {
     0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
     0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
     1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
     1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
-  };
+    };*/
+  Vertex vertices[4];
+  for (int i = 0; i < 4; i++)
+    vertices[i].r = vertices[i].g = vertices[i].b = 255.0f/255.0f;
+  vertices[0].x = 0.0f;
+  vertices[0].y = 0.0f;
+  vertices[1].x = 0.0f;
+  vertices[1].y = 1.0f;
+  vertices[2].x = 1.0f;
+  vertices[2].y = 1.0f;
+  vertices[3].x = 1.0f;
+  vertices[3].y = 0.0f;
 
+  vertices[0].s = 0.0f;
+  vertices[0].t = 0.0f;
+  vertices[1].s = 0.0f;
+  vertices[1].t = 1.0f;
+  vertices[2].s = 1.0f;
+  vertices[2].t = 1.0f;
+  vertices[3].s = 1.0f;
+  vertices[3].t = 0.0f;
+ 
   unsigned int indices[] = {
     0, 1, 2,
     2, 3, 0
@@ -46,13 +71,13 @@ Image * selene_create_image(const char * path) {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, image->_ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) 0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) 0);
   glEnableVertexAttribArray(0);
 
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) (2 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (4 * sizeof(vertices[0].s)));
   glEnableVertexAttribArray(1);
 
-  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) (5 * sizeof(float)));
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (2 * sizeof(vertices[0].s)));
   glEnableVertexAttribArray(2);
   
   glBindVertexArray(0);
@@ -68,9 +93,6 @@ Image * selene_create_image(const char * path) {
   
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-  int w, h, comp;
-  unsigned char * img = stbi_load(path, &(image->_width), &(image->_height), &comp, STBI_rgb_alpha);
 
   if (!img) {
     printf("Could not be possible to load the image: %s\n", path);
@@ -185,6 +207,7 @@ void selene_draw_image(Image * image, Quad * quad, int x, int y) {
   
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
   selene_send_uniform(CORE->_default_shader, "spriteFrame" , 4, tex);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
   
   glBindTexture(GL_TEXTURE_2D, image->_tex);
   glBindVertexArray(image->_vao);
@@ -194,6 +217,8 @@ void selene_draw_image(Image * image, Quad * quad, int x, int y) {
 }
 
 void selene_draw_image_ex(Image * image, Quad * quad, int x, int y, float sx, float sy, float angle, float cx, float cy) {
+
+  //selene_use_default_shader();
   mat4x4 model;
   mat4x4 aux;
 
@@ -222,7 +247,7 @@ void selene_draw_image_ex(Image * image, Quad * quad, int x, int y, float sx, fl
   
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
   selene_send_uniform(CORE->_default_shader, "spriteFrame" , 4, tex);
-  
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
 
   glBindTexture(GL_TEXTURE_2D, image->_tex);
   glBindVertexArray(image->_vao);

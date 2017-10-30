@@ -1,6 +1,9 @@
 #include "primitives.h"
 
+extern mat4x4 view;
+
 void selene_init_primitives() {
+  //primitive_shader = selene_create_shader(DEFAULT_PRIMITIVES_VERT_SHADER, DEFAULT_PRIMITIVES_FRAG_SHADER);
   circle = calloc(1, sizeof(Circle));
   glGenVertexArrays(1, &(circle->_vao));
   glGenBuffers(1, &(circle->_vbo));
@@ -24,7 +27,13 @@ void selene_init_primitives() {
 }
 
 void selene_draw_circle(const char* filled, int x, int y, float radius, int numOfSides) {
-  selene_use_default_shader();
+
+
+  int draw_type = GL_TRIANGLE_FAN;
+  if (!strcmp(filled, "line")) {
+    draw_type = GL_LINE_LOOP;
+  }
+  
   int numOfVertices = 1;
   if (numOfSides)
     numOfVertices = numOfSides + 2;
@@ -66,17 +75,22 @@ void selene_draw_circle(const char* filled, int x, int y, float radius, int numO
   glBindVertexArray(0);
 
   glBindVertexArray(circle->_vao);
-  glDrawArrays(GL_TRIANGLE_FAN, 0, numOfVertices);
+  
+  glDrawArrays(draw_type, 0, numOfVertices);
 
   glBindVertexArray(0);
 }
 
 void selene_draw_rectangle(const char* filled, int x, int y, float width, float height) {
-  selene_use_default_shader();
+  Uint32 draw_type = GL_TRIANGLES;
+  if (!strcmp(filled, "line")) {
+    draw_type = GL_LINE_LOOP;
+  }
   mat4x4 model;
   mat4x4_identity(model);
 
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
   float vertices[] = {
     x, y,
     x + width, y,
@@ -102,7 +116,46 @@ void selene_draw_rectangle(const char* filled, int x, int y, float width, float 
   glBindVertexArray(0);
 
   glBindVertexArray(rectangle->_vao);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  glDrawElements(draw_type, 6, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(0);
+}
+
+void selene_draw_rectangle_quad(const char* filled, Quad quad) {
+  Uint32 draw_type = GL_TRIANGLES;
+  if (!strcmp(filled, "line")) {
+    draw_type = GL_LINE_LOOP;
+  }
+  mat4x4 model;
+  mat4x4_identity(model);
+
+  selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
+  float vertices[] = {
+    quad._x, quad._y,
+    quad._x + quad._width, quad._y,
+    quad._x + quad._width, quad._y + quad._height,
+    quad._x, quad._y + quad._height
+  };
+
+  unsigned int indices[] = {
+    0, 1, 2,
+    2, 3, 0
+  };
+
+  glBindVertexArray(rectangle->_vao);
+
+  glBindBuffer(GL_ARRAY_BUFFER, rectangle->_vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangle->_ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
+
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+  glEnableVertexAttribArray(0);
+  glBindVertexArray(0);
+
+  glBindVertexArray(rectangle->_vao);
+  glDrawElements(draw_type, 6, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
 
@@ -111,6 +164,7 @@ void selene_draw_triangle(const char* filled, int x1, int y1, int x2, int y2, in
   mat4x4_identity(model);
 
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
 
   float vertices[] = {
     x1, y1,
@@ -136,6 +190,7 @@ void selene_draw_line(int x1, int y1, int x2, int y2) {
   mat4x4 model;
   mat4x4_identity(model);
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
   float vertices[] = {
     x1, y1,
     x2, y2,
@@ -161,6 +216,7 @@ void selene_draw_point(int x, int y) {
 
 
   selene_send_uniform(CORE->_default_shader, "model", 16, *model);
+  selene_send_uniform(CORE->_default_shader, "view", 16, *view);
   float vertices[] = {
     x, y,
   };

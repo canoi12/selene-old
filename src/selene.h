@@ -22,15 +22,19 @@
 #include "spritebatch.h"
 #include "font.h"
 #include "primitives.h"
+#include "canvas.h"
 
 #define min(a,b) (a < b ? a : b)
 #define max(a,b) (a > b ? a : b)
 #define clamp(x, v1, v2) (min(v2, max(x, v1)))
 #define toRadians(x) (x * (M_PI / 180.0))
 #define toDegrees(x) (x * (180.0 / M_PI))
-#define DEFAULT_VERT_SHADER_PATH "src/vert.glsl"
-#define DEFAULT_FRAG_SHADER_PATH "src/frag.glsl"
 
+#define DEFAULT_VERT_SHADER_PATH "src/shaders/vert.glsl"
+#define DEFAULT_FRAG_SHADER_PATH "src/shaders/frag.glsl"
+
+#define DEFAULT_PRIMITIVES_VERT_SHADER "src/shaders/primitives.vert"
+#define DEFAULT_PRIMITIVES_FRAG_SHADER "src/shaders/primitives.frag"
 
 typedef enum {
   SELENE_TRUE = 1,
@@ -46,11 +50,19 @@ typedef struct {
   Window * _window;
   SDL_GLContext * _context;
   const Uint8 * _keyArray;
+  Uint8 * _keyOldState;
   SDL_Event _event;
   sel_bool _running;
   Shader * _default_shader; // src/vert.glsl - src/frag.glsl
+  Shader * _current_shader;
   Font * _current_font;
 } Selene;
+
+typedef struct vertex {
+  float x, y;
+  float s, t;
+  float r, g, b;
+} Vertex;
 
 Selene * CORE;
 
